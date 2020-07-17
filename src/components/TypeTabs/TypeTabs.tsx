@@ -31,7 +31,6 @@ export const TypeTabs: FC = () => {
 
   const onChange = useCallback(
     (event, index) => {
-      console.log(index);
       navigate(`/${airport}/${weatherTypesNames[index]}`);
     },
     [navigate, airport]

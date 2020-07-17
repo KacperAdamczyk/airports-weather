@@ -8,6 +8,8 @@ import { TypeTabs } from 'components/TypeTabs/TypeTabs';
 import { Api } from 'api/api';
 import { metarAtom } from 'atoms/metar';
 import { tafAtom } from 'atoms/taf';
+import { Metar } from 'interfaces/metar';
+import { Taf } from 'interfaces/taf';
 
 const Container = styled.div`
   display: flex;
@@ -25,11 +27,13 @@ export const Weather: FC = () => {
     const api = new Api();
 
     (async () => {
-      const metar = await api.getMetar(airport);
-      const taf = await api.getTaf(airport);
+      const [metar, taf] = await Promise.all([
+        api.getMetar(airport),
+        api.getTaf(airport),
+      ]);
 
-      setMetar(metar);
-      setTaf(taf);
+      setMetar(metar as Metar);
+      setTaf(taf as Taf);
     })();
   }, [airport, setMetar, setTaf]);
 
